@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ object.pk }}{% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <h2>{{ object.name }}</h2>
+        <ul>
+            {% for actor in object.actors.all %}
+                <li><a href="{% url 'actor-detail' actor.pk %}">{{ actor.name }}</a></li>
+            {% endfor %}
+        </ul>
+        <a href="{% url 'homepage' %}" class="btn btn-secondary">zpět na vyhledávání</a>
+    </div>
+{% endblock body %}

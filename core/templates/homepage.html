@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Homepage {% endblock title %}
+
+{% block body %}
+    <div class="container">
+        <div class="row justify-content-center mt-5">
+            <form action="{% url 'homepage' %}" method="post">
+                {% csrf_token %}
+                {{ form.search_input }}
+                <input type="submit" class="btn btn-secondary" value="vyhledat">
+            </form>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-6 border border-dark">
+                <h3>Filmy: </h3>
+                {% for movie in movies %}
+                    <a href="{% url 'movie-detail' movie.pk %}">{{ movie.name }}</a><br>
+                {% endfor %}
+            </div>
+            <div class="col-6 border border-dark">
+                <h3>Herci: </h3>
+                {% for actor in actors %}
+                    <a href="{% url 'actor-detail' actor.pk %}">{{ actor.name }}</a><br>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock body %}
