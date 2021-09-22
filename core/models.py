@@ -17,8 +17,8 @@ class BaseModel(models.Model):
 
 
 class Movie(BaseModel):
-    name = models.CharField(max_length=512, unique=True)
-    detail_url = models.URLField()
+    name = models.CharField(max_length=512)
+    detail_url = models.URLField(unique=True)
     actors = models.ManyToManyField(
         'core.Actor',
         blank=True,
@@ -30,8 +30,8 @@ class Movie(BaseModel):
 
 
 class Actor(BaseModel):
-    name = models.CharField(max_length=256, unique=True)
-    detail_url = models.URLField()
+    name = models.CharField(max_length=256)
+    detail_url = models.URLField(unique=True)
 
     def __str__(self):
         return f'{self.id} : {self.name}'

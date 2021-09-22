@@ -24,7 +24,7 @@ class Command(BaseCommand):
 
     @staticmethod
     def create_actor(name: str, detail_url: str) -> Actor:
-        actor, created = Actor.objects.get_or_create(name=name, defaults={'detail_url': detail_url})
+        actor, created = Actor.objects.get_or_create(name=name, detail_url=detail_url)
         return actor
 
     def get_actors_for_movie(self, movie_detail_url: str) -> typing.List[Actor]:
@@ -47,13 +47,15 @@ class Command(BaseCommand):
         return actors
 
     def create_movie(self, name: str, movie_detail_url: str):
-        movie, created = Movie.objects.get_or_create(name=name, defaults={'detail_url': movie_detail_url})
+        movie, created = Movie.objects.get_or_create(name=name, detail_url=movie_detail_url)
         if created:
             print(f'Creating movie: {name}')
             # If movie wasn't created, we suppose that it already have all actors connected
             movie.actors.add(*self.get_actors_for_movie(movie_detail_url))
 
     def handle(self, *args, **options):
+        Movie.objects.all().delete()
+        Actor.objects.all().delete()
         print('CSFD data import started')
 
         csfd_url = 'https://www.csfd.cz/zebricky/filmy/nejlepsi/?showMore=1'
